@@ -1,0 +1,19 @@
+.top20 {
+  margin-top: 20px;
+}
+
+.padding20 {
+  padding: 20px;
+}
+
+.card {
+  width: 270px !important;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.letter {
+  letter-spacing: 1px;
+}
