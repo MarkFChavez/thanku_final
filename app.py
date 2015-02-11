@@ -101,8 +101,18 @@ def dashboard():
 @app.route("/logout")
 @login_required
 def logout():
+  user = current_user
+  user.authenticated = False
+  db.session.add(user)
+  db.session.commit()
+
   logout_user()
   return redirect(url_for("index"))
+
+@app.route("/api/v1.0/users")
+def users():
+  users = User.query.all()
+  return jsonify({ "users": [user.to_json() for user in users]})
 
 @login_manager.user_loader
 def load_user(user_id):
