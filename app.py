@@ -42,6 +42,10 @@ class User(UserMixin, db.Model):
   first_name = db.Column(db.String(128))
   last_name = db.Column(db.String(128))
 
+  thanku_recipients = db.relationship("Vote", foreign_keys=[Vote.user_id], backref = db.backref("user", lazy="joined"), lazy="dynamic", cascade="all, delete-orphan")
+
+  thanku_sources = db.relationship("Vote", foreign_keys=[Vote.recipient_id], backref = db.backref("recipient", lazy="joined"), lazy="dynamic", cascade="all, delete-orphan")
+
   def __repr__(self):
     return "<User %r>" % self.full_name()
 
@@ -58,6 +62,47 @@ class User(UserMixin, db.Model):
     }
 
     return json_user
+
+  def give_credit_to(self, user, point, reason):
+    # check if the last credit is given on the same day
+    # if same day, do not allow it
+    c = Vote(user=self, recipient=user, point=point, reason=reason)
+    db.session.add(c)
+
+  def has_given_credit_to(self, user):
+    return self.thanku_recipients.filter_by(recipient_id=user.id).first() is not None
+
+  def total_points(self):
+    new_array = []
+    votes = Vote.query.filter_by(recipient_id=self.id)
+
+    for i in votes:
+      new_array.append(i.point)
+
+    return sum(new_array)
+
+class Vote(db.Model):
+  __tablename__ = "votes"
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  recipient_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+  reason = db.Column(db.String(255))
+  point = db.Column(db.Integer)
+
+  def __repr__(self):
+    return "<Vote %r>" % self.reason
+
+  def to_json(self):
+    json_vote = {
+      "user": User.query.get(self.user_id).to_json(),
+      "recipient": User.query.get(self.recipient_id).to_json(),
+      "message": self.reason,
+      "timestamp": self.timestamp,
+      "point": self.point
+    }
+
+    return json_vote
 
 @app.route("/")
 def index():
@@ -107,12 +152,22 @@ def logout():
   db.session.commit()
 
   logout_user()
+
   return redirect(url_for("index"))
 
 @app.route("/api/v1.0/users")
 def users():
   users = User.query.all()
   return jsonify({ "users": [user.to_json() for user in users]})
+
+@app.route("/api/v1.0/thank/<int:user_id>", methods=["POST"])
+def thank_user(user_id):
+  user = current_user
+  recipient = User.query.get(user_id)
+
+  user.give_credit_to(recipient, int(request.json("point")), request.json("reason"))
+
+  return jsonify({ "status": "ok", "user": user.to_json(), "recipient": recipient.to_json() })
 
 @login_manager.user_loader
 def load_user(user_id):
