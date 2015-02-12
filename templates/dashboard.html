@@ -17,47 +17,84 @@
         <script src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3.min.js') }}"></script>
     </head>
 
-    <body>
-      <nav>
-        <div class="container">
-          <div class="navbar-fixed">
-            <div class="nav-wrapper">
-              <a href="#" class="brand-logo"></a>
-              <img src="{{ url_for('static', filename='img/logo.PNG') }}" class="logo" alt="Logo"/>
+    <body class="amber lighten-4" ng-controller="DashboardController as vm" ng-init="vm.init()">
+      <div class="navbar-fixed">
+      <nav class="pink accent-1 ">
+        <div class="nav-wrapper">
+          <div class="col l12">
+            <ul class="right">
+              <li>
+                <a href="#!"> Hi {{ current_user.first_name }} </a>
+              </li>
+
+              <li>
+                <a href="/logout"> Sign out </a>
+              </li>
+            </ul>
+
+            <div class="right top5" style="margin-right:10px">
+              <img src="{{ current_user.image }}" class="responsive-img" />
             </div>
           </div>
+
+          <a href="/dashboard"> 
+            <img src="{{ url_for('static', filename='img/logo.PNG') }}" class="logo" alt="Logo"/>
+          </a>
         </div>
-      </nav>
+        </nav>
+      </div>
 
       <div class="row top20" ng-init="vm.init()" ng-cloak>
         <div class="friend-list row">
-          <div class="s12 m12 l12 friend-container container" ng-repeat="user in vm.users">
-            <img class="friend-img" ng-src="{[{user.image_url}]}">
+          <div class="s12 m12 l12 friend-container " ng-repeat="user in vm.users">
+            <img class="friend-img" ng-src="{[{user.image}]}">
             <div class="tooltip card white friend-details">
-              <div class="card-content white-text">
+              <div class="card-content black-text">
                 <span class="card-title">{[{user.first_name}]}</span>
+                <div class="right">
+                  <div class="btn waves-effect" ng-click="vm.vote(1,user.id)">
+                    <i class="mdi-action-stars"></i>
+                  </div>
+                  <div class="btn waves-effect" ng-click="vm.vote(2,user.id)">
+                    <i class="mdi-action-stars"></i>
+                    <i class="mdi-action-stars"></i>
+                  </div>
+                </div>
                 <div class="row no-margin">
                   <form class="col s12">
-                    <div class="row">
+                    <div class="row no-margin">
                       <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea no-margin no-pad white-text"></textarea>
+                        <textarea id="textarea1" ng-model="vm.reason" class="materialize-textarea no-margin no-pad white-text"></textarea>
                         <label for="textarea1" class="white-text">Reason</label>
                       </div>
                     </div>
                   </form>
                 </div>
               </div>
-              <div class="card-action">
-                <div class="btn waves-effect">
-                  <b>
-                    &#x000FC
-                  </b>
+            </div>
+          </div>
+        </div>
+        <div class="col l8 m8 offset-l2 offset-m2">
+          <div class="card-panel newsfeed-card" ng-repeat="nf in vm.newsfeed | orderBy:'-timestamp'">
+            <div class="row valign-wrapper">
+              <div class="col s2 m1 l1">
+                <img class="newsfeed-img" ng-src="{[{nf.user.image}]}" style="height:60px; width:60px;">
+              </div>
+              <div class="col s10 m11 l11">
+                <span><strong>{[{ nf.user.first_name  }]} {[{ nf.user.last_name  }]}</strong></span>
+                <br>
+                <em>
+                  <small class="">{[{ vm.getMomentTime(nf.timestamp)  }]}</small>
+                </em>
+                <br>
+                <span>{[{ nf.message  }]} </span>
+                <div ng-if="nf.point==1" class="right vote"> 
+                  <i class="mdi-action-stars"></i>
                 </div>
-                <div class="btn waves-effect">
-                  <b>
-                    &#x000FC &#x000FC
-                  </b>
-                </div>
+                <div ng-if="nf.point==2" class="right vote"> 
+                  <i class="mdi-action-stars"></i>
+                  <i class="mdi-action-stars"></i>
+                </div>  
               </div>
             </div>
           </div>
@@ -69,7 +106,7 @@
       <script src="{{ url_for('static', filename='js/vendor/angular-route.js') }}"></script>
       <script src="{{ url_for('static', filename='js/vendor/toastr.js') }}"></script>
       <script src="{{ url_for('static', filename='js/vendor/materialize.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/vendor/moment.js') }}"></script>
       <script src="{{ url_for('static', filename='js/main.js') }}"></script>
       <script src="{{ url_for('static', filename='js/services/ApiService.js') }}"></script>
       <script src="{{ url_for('static', filename='js/controllers/DashboardController.js') }}"></script>

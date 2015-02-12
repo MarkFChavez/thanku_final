@@ -1,11 +1,14 @@
+.top5 {
+  margin-top: 5px; }
+
+.top10 {
+  margin-top: 10px; }
+
 .top20 {
   margin-top: 20px; }
 
 .padding20 {
   padding: 20px; }
-
-.card {
-  width: 270px !important; }
 
 .italic {
   font-style: italic; }
@@ -13,7 +16,7 @@
 .letter {
   letter-spacing: 1px; }
 
-html {
+.login {
   background: url(../img/bg1.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -21,8 +24,8 @@ html {
   background-size: cover;
   filter: grayscale(100%); }
 
-nav {
-  background-color: #ff84d5; }
+/* nav { */
+/*   background-color: #ff84d5; } */
 
 .border-raduis-10 {
   border-radius: 10px; }
@@ -61,7 +64,20 @@ nav {
   position: fixed;
   float: left;
   background-color: #FF60C9;
-  padding: 10px 10px; }
+  padding: 10px 10px; 
+  max-height: 450px;
+}
+.newsfeed-card {
+  position: relative;
+}
+.vote {
+  position: absolute  ;
+  top: 10px;
+  right: 20px;
+}
+.vote i {
+  font-size: 15px;
+}
 
 .friend-container {
   padding: 5px;
@@ -79,17 +95,18 @@ nav {
 .friend-details {
   visibility: hidden;
   position: absolute !important;
-  width: 100px;
   top: 0;
   left: 65px; }
 
 .tooltip {
   position: fixed;
   opacity: 0;
+  z-index: 999 !important;
+  visibility: hidden;
   color: #FFF;
   top: 0px;
   left: 55px;
-  width: 180px;
+  width: 500px;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -98,23 +115,32 @@ nav {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg); }
 
-.container .tooltip:after {
+.friend-container .tooltip:after {
   position: absolute;
   top: 100%;
   left: 45%;
   height: 0;
   width: 0; }
 
-.container:hover .tooltip {
+.friend-container:hover .tooltip {
   opacity: 1;
   top: -5px;
   -webkit-transform: rotateY(0deg);
-  transform: rotateY(0deg); }
+  transform: rotateY(0deg); 
+  visibility: visible;
+  z-index: 999 !important;
+}
 
 .card {
-  color: #000; }
-  .card .card-content {
-    padding: 5px; }
+  color: #000;
+}
+.card .card-title {
+  color: #000;
+}
+
+.card .card-content {
+  padding: 5px; 
+}
 
 textarea.materialize-textarea,
 textarea.materialize-textarea:focus {
@@ -128,5 +154,3 @@ textarea.materialize-textarea:focus {
   background-color: #FF60C9; }
   .btn:hover, .btn:focus {
     background-color: #FF60C9; }
-
-/*# sourceMappingURL=styles.css.map */

@@ -6,6 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from rauth.service import OAuth2Service
 from flask.ext.login import LoginManager
 from flask.ext.login import UserMixin, login_required, login_user, logout_user, current_user
+from flask.ext.cors import CORS
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 graph_url = "https://graph.facebook.com/"
@@ -19,6 +20,7 @@ DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 manager = Manager(app)
+cors = CORS(app)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -91,6 +93,7 @@ class User(UserMixin, db.Model):
     # if same day, do not allow it
     c = Vote(user=self, recipient=user, point=point, reason=reason)
     db.session.add(c)
+    db.session.commit()
 
   def has_given_credit_to(self, user):
     return self.thanku_recipients.filter_by(recipient_id=user.id).first() is not None
@@ -141,7 +144,14 @@ def authorized():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-  return render_template("dashboard.html")
+  users = User.query.all()
+  return render_template("dashboard.html", users=users)
+
+@app.route("/api/v1.0/news-feed")
+@login_required
+def news_feed():
+  votes = Vote.query.all()
+  return jsonify({ "status": "ok", "votes": [vote.to_json() for vote in votes] })
 
 @app.route("/logout")
 @login_required
@@ -157,17 +167,25 @@ def logout():
 
 @app.route("/api/v1.0/users")
 def users():
-  users = User.query.all()
+  users = User.query.filter(User.id != current_user.id)
   return jsonify({ "users": [user.to_json() for user in users]})
 
 @app.route("/api/v1.0/thank/<int:user_id>", methods=["POST"])
 def thank_user(user_id):
   user = current_user
   recipient = User.query.get(user_id)
+  point = request.json["point"]
 
-  user.give_credit_to(recipient, int(request.json("point")), request.json("reason"))
+  if request.json.has_key("reason"):
+    reason = request.json["reason"]
+  else:
+    reason = ""
 
-  return jsonify({ "status": "ok", "user": user.to_json(), "recipient": recipient.to_json() })
+  message = "You gave %d thank(s) to %s. Go get a beer!" % (int(point), recipient.full_name())
+
+  user.give_credit_to(recipient, int(request.json["point"]), reason)
+
+  return jsonify({ "status": "ok", "user": user.to_json(), "recipient": recipient.to_json(), "message": message })
 
 @login_manager.user_loader
 def load_user(user_id):
