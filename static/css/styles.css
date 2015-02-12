@@ -1,0 +1,132 @@
+.top20 {
+  margin-top: 20px; }
+
+.padding20 {
+  padding: 20px; }
+
+.card {
+  width: 270px !important; }
+
+.italic {
+  font-style: italic; }
+
+.letter {
+  letter-spacing: 1px; }
+
+html {
+  background: url(../img/bg1.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: grayscale(100%); }
+
+nav {
+  background-color: #ff84d5; }
+
+.border-raduis-10 {
+  border-radius: 10px; }
+
+.light-text {
+  color: rgba(247, 242, 242, 0.84); }
+
+.hot-pink {
+  background-color: #FF60C9; }
+
+.hot-pink:hover {
+  background-color: #e00094; }
+
+.hot-pink-transparent {
+  background-color: rgba(247, 242, 242, 0.84); }
+
+.logo-img {
+  background: url("../img/logo_1.png") no-repeat center center;
+  height: 200px;
+  width: 100%; }
+
+.logo {
+  height: 85px;
+  margin-top: -5px; }
+
+.container {
+  width: 85% !important;
+  height: 640px;
+  overflow: hidden; }
+
+.img-btn {
+  max-width: 100%;
+  max-height: 100%; }
+
+.friend-list {
+  position: fixed;
+  float: left;
+  background-color: #FF60C9;
+  padding: 10px 10px; }
+
+.friend-container {
+  padding: 5px;
+  position: relative; }
+
+.friend-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px; }
+
+.friend-container:hover .friend-details {
+  visibility: visible;
+  display: inline-block; }
+
+.friend-details {
+  visibility: hidden;
+  position: absolute !important;
+  width: 100px;
+  top: 0;
+  left: 65px; }
+
+.tooltip {
+  position: fixed;
+  opacity: 0;
+  color: #FFF;
+  top: 0px;
+  left: 55px;
+  width: 180px;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
+
+.container .tooltip:after {
+  position: absolute;
+  top: 100%;
+  left: 45%;
+  height: 0;
+  width: 0; }
+
+.container:hover .tooltip {
+  opacity: 1;
+  top: -5px;
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg); }
+
+.card {
+  color: #000; }
+  .card .card-content {
+    padding: 5px; }
+
+textarea.materialize-textarea,
+textarea.materialize-textarea:focus {
+  border-bottom: 1px solid #000;
+  color: #000 !important; }
+  textarea.materialize-textarea + label,
+  textarea.materialize-textarea:focus + label {
+    color: #000 !important; }
+
+.btn {
+  background-color: #FF60C9; }
+  .btn:hover, .btn:focus {
+    background-color: #FF60C9; }
+
+/*# sourceMappingURL=styles.css.map */

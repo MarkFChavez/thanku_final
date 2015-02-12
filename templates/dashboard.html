@@ -1,6 +1,77 @@
-HELLO {{ current_user.full_name() }}
-<a href="/logout"> Logout </a>
+<!DOCTYPE html>
+<html lang="en" ng-app="thanku">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Thank&#x000FC</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<br />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
 
-<img src="{{ current_user.image }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/toastr.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3.min.js') }}"></script>
+    </head>
+
+    <body>
+      <nav>
+        <div class="container">
+          <div class="navbar-fixed">
+            <div class="nav-wrapper">
+              <a href="#" class="brand-logo"></a>
+              <img src="{{ url_for('static', filename='img/logo.PNG') }}" class="logo" alt="Logo"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="row top20" ng-init="vm.init()" ng-cloak>
+        <div class="friend-list row">
+          <div class="s12 m12 l12 friend-container container" ng-repeat="user in vm.users">
+            <img class="friend-img" ng-src="{[{user.image_url}]}">
+            <div class="tooltip card white friend-details">
+              <div class="card-content white-text">
+                <span class="card-title">{[{user.first_name}]}</span>
+                <div class="row no-margin">
+                  <form class="col s12">
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <textarea id="textarea1" class="materialize-textarea no-margin no-pad white-text"></textarea>
+                        <label for="textarea1" class="white-text">Reason</label>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="card-action">
+                <div class="btn waves-effect">
+                  <b>
+                    &#x000FC
+                  </b>
+                </div>
+                <div class="btn waves-effect">
+                  <b>
+                    &#x000FC &#x000FC
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/vendor/angular.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/vendor/angular-route.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/vendor/toastr.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/vendor/materialize.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/services/ApiService.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/controllers/DashboardController.js') }}"></script>
+  </body>
+</html>

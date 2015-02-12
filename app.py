@@ -34,6 +34,29 @@ facebook = OAuth2Service(
     base_url=graph_url
 )
 
+class Vote(db.Model):
+  __tablename__ = "votes"
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  recipient_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+  timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+  reason = db.Column(db.String(255))
+  point = db.Column(db.Integer)
+
+  def __repr__(self):
+    return "<Vote %r>" % self.reason
+
+  def to_json(self):
+    json_vote = {
+      "user": User.query.get(self.user_id).to_json(),
+      "recipient": User.query.get(self.recipient_id).to_json(),
+      "message": self.reason,
+      "timestamp": self.timestamp,
+      "point": self.point
+    }
+
+    return json_vote
+
 class User(UserMixin, db.Model):
   __tablename__ = "users"
   id = db.Column(db.Integer, primary_key=True)
@@ -80,29 +103,6 @@ class User(UserMixin, db.Model):
       new_array.append(i.point)
 
     return sum(new_array)
-
-class Vote(db.Model):
-  __tablename__ = "votes"
-  id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-  recipient_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-  timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-  reason = db.Column(db.String(255))
-  point = db.Column(db.Integer)
-
-  def __repr__(self):
-    return "<Vote %r>" % self.reason
-
-  def to_json(self):
-    json_vote = {
-      "user": User.query.get(self.user_id).to_json(),
-      "recipient": User.query.get(self.recipient_id).to_json(),
-      "message": self.reason,
-      "timestamp": self.timestamp,
-      "point": self.point
-    }
-
-    return json_vote
 
 @app.route("/")
 def index():

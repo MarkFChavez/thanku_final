@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function(){
   $(window).load(function() {
     $("#cards").imagesLoaded(function() {
       $("#cards").masonry({
@@ -8,8 +8,5 @@ $(document).ready(function() {
       });
     });
   });
-
-
   $(".modal-trigger").leanModal();
-
-});
+})
