@@ -83,7 +83,8 @@ class User(UserMixin, db.Model):
       "fbid": self.fbid,
       "image": self.image,
       "first_name": self.first_name,
-      "last_name": self.last_name
+      "last_name": self.last_name,
+      "points": self.total_points()
     }
 
     return json_user
@@ -152,6 +153,16 @@ def dashboard():
 def news_feed():
   votes = Vote.query.all()
   return jsonify({ "status": "ok", "votes": [vote.to_json() for vote in votes] })
+
+@app.route("/api/v1.0/top")
+def get_top():
+  users = User.query.all()
+  points = []
+
+  for user in users:
+    points.append( (user, user.total_points) )
+
+  return jsonify({ "user": [point[0].to_json() for point in points] })
 
 @app.route("/logout")
 @login_required
