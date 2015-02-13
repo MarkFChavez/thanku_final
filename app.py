@@ -184,8 +184,17 @@ def users():
 @app.route("/api/v1.0/thank/<int:user_id>", methods=["POST"])
 def thank_user(user_id):
   user = current_user
+
   recipient = User.query.get(user_id)
   point = request.json["point"]
+  allowed_to_thank = True
+
+  votes =  Vote.query.filter_by(user_id = user.id, recipient_id = recipient.id, point = point)
+
+  for vote in votes:
+    if vote.timestamp.date() == datetime.today().date():
+      allowed_to_thank = False
+      break
 
   if request.json.has_key("reason"):
     reason = request.json["reason"]
@@ -194,9 +203,12 @@ def thank_user(user_id):
 
   message = "You gave %d thank(s) to %s. Go get a beer!" % (int(point), recipient.full_name())
 
-  user.give_credit_to(recipient, int(request.json["point"]), reason)
+  if allowed_to_thank == True:
+    user.give_credit_to(recipient, int(request.json["point"]), reason)
+    return jsonify({ "status": "ok", "user": user.to_json(), "recipient": recipient.to_json(), "message": message })
+  else:
+    return jsonify({ "status": "error", "user": user.to_json(), "recipient": recipient.to_json(), "message": "You are not allowed to give 2 points for today" })
 
-  return jsonify({ "status": "ok", "user": user.to_json(), "recipient": recipient.to_json(), "message": message })
 
 @login_manager.user_loader
 def load_user(user_id):
