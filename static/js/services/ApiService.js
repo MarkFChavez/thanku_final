@@ -73,6 +73,8 @@
                       if( data.status == 'ok' ) {
                         toastr.success(data.message);
                         vm.reason = "";
+                      } else {
+                        toastr.error(data.message);
                       }
                     }).
                     error(function(data){

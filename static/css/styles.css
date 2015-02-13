@@ -19,6 +19,10 @@
 .letter {
   letter-spacing: 1px; }
 
+.no-margin {
+	margin: 0 !important;
+}
+
 .login {
   background: url(../img/bg1.png) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -70,7 +74,7 @@
   margin-top: 10px;
   background-color: #ff80ab;
   padding: 10px 10px; 
-  max-height: 410px;
+  /*max-height: 410px;*/
   z-index: 999;
   /*overflow-y: scroll;
   overflow-x: hidden;
@@ -84,9 +88,11 @@
   top: 10px;
   right: 20px;
 }
-.vote i {
-  font-size: 15px;
-}
+.vote.two i {
+  font-size: 20px;
+  -webkit-animation: rainbow 1s linear infinite; /* Chrome, Safari, Opera */
+  animation: rainbow 1s linear infinite;
+}	
 
 .friend-container {
   padding: 5px;
@@ -185,3 +191,22 @@ textarea.materialize-textarea:focus {
 ::-moz-scrollbar-corner {
   background-color: black;
 } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow {
+    0%   {color: pink;}
+    25%  {color: hotpink;}
+    50%  {color: white;}
+    75%  {color: hotpink;}
+    100% {color: pink;}
+}
+
+/* Standard syntax */
+@keyframes rainbow {
+    0%   {color: pink;}
+    25%  {color: hotpink;}
+    50%  {color: white;}
+    75%  {color: hotpink;}
+    100% {color: pink;}
+}

@@ -43,11 +43,11 @@
       </div>
 
       <div class="row top20" ng-init="vm.init()" ng-cloak>
-        <div class="friend-list row">
+        <div class="friend-list row z-depth-3">
           <div class="s12 m12 l12 friend-container " ng-repeat="user in vm.users">
             <img class="friend-img" ng-src="{[{user.image}]}">
             <div class="tooltip card-panel white friend-details z-depth-5">
-              <span class="">{[{user.first_name}]}</span>
+              <h5 class="black-text left">Give {[{user.first_name}]} a thanks!</h5>
               <div class="right">
                 <div class="btn waves-effect" ng-click="vm.vote(1,user.id)">
                   <i class="mdi-action-stars"></i>
@@ -66,7 +66,7 @@
         </div>
         <div class="col l8 m8 offset-l2 offset-m2">
           <div class="card-panel newsfeed-card" ng-repeat="nf in vm.newsfeed | orderBy:'-timestamp'">
-            <div class="row valign-wrapper">
+            <div class="row valign-wrapper no-margin">
               <div class="col s2 m2 l2">
                 <img class="newsfeed-img" ng-src="{[{nf.user.image}]}" >
               </div>
@@ -79,16 +79,11 @@
                   <small class="">{[{ vm.getMomentTime(nf.timestamp)  }]}</small>
                 </em>
                 <br>
-                <div ng-if="nf.point==1">
-                  <span>{[{ nf.message  }]} </span>
-                </div>
-                <div ng-if="nf.point==2">
-                  <h4>{[{ nf.message }]} </h4>
-                </div>
-                <div ng-if="nf.point==1" class="right vote"> 
+                <span>{[{ nf.message  }]} </span>
+                <div ng-if="nf.point==1" class="right vote one"> 
                   <i class="mdi-action-stars"></i>
                 </div>
-                <div ng-if="nf.point==2" class="right vote"> 
+                <div ng-if="nf.point==2" class="right vote two"> 
                   <i class="mdi-action-stars"></i>
                   <i class="mdi-action-stars"></i>
                 </div>  
