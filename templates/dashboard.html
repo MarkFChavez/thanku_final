@@ -42,8 +42,12 @@
         </nav>
       </div>
 
-      <div class="row top20" ng-init="vm.init()" ng-cloak>
-        <div class="friend-list row z-depth-3">
+      <div ng-repeat="user in vm.scores">
+        {[{user.points}]}
+      </div>
+
+      <div class="row top20" ng-cloak>
+        <div class="friend-list row">
           <div class="s12 m12 l12 friend-container " ng-repeat="user in vm.users">
             <img class="friend-img" ng-src="{[{user.image}]}">
             <div class="tooltip card-panel white friend-details z-depth-5">
@@ -91,6 +95,84 @@
             </div>
           </div>
         </div>
+        <div class="col l2 m2">
+          <div class="row">
+            <div class="col l12 m12" ng-click="vm.getScores()">
+              <a class="waves-effect waves-light btn modal-trigger" href="#modal1"> <i class="mdi-action-stars"></i>See Top 3 <i class="mdi-action-stars"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal top-three-modal">
+          <div class="modal-content">
+            <div class="row">
+              <div class="col s12 m12 l12 center">
+                <h5> <i class="mdi-action-stars"></i> Top 3 for the week! <i class="mdi-action-stars"></i></h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s10 offset-s1 m10 offset-m1 l10 offset-l1">
+              <div class="row">
+                <div class="col s3 m3 l3">
+                  <div class="card z-depth-2">
+                    <div class="card-image">
+                      <img ng-src="{[{vm.userScores[1].image}]}">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">
+                        Top 2
+                      </span>
+                      <h6>
+                        {[{vm.userScores[1].first_name}]}  {[{vm.userScores[1].last_name}]}
+                        <small>
+                          with {[{vm.userScores[1].points}]} point(s)
+                        </small>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s6 m6 l6">
+                  <div class="card  z-depth-5">
+                    <div class="card-image">
+                      <img ng-src="{[{vm.userScores[0].image}]}">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">
+                        Top 1
+                      </span>
+                      <h6>
+                        {[{vm.userScores[0].first_name}]}  {[{vm.userScores[0].last_name}]}
+                        <small>
+                          with {[{vm.userScores[0].points}]} point(s)
+                        </small>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s3 m3 l3">
+                  <div class="card medium z-depth-3">
+                    <div class="card-image">
+                      <img ng-src="{[{vm.userScores[2].image}]}">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">
+                        Top 3
+                      </span>
+                      <h6>
+                        {[{vm.userScores[2].first_name}]}  {[{vm.userScores[2].last_name}]}
+                        <small>
+                          with {[{vm.userScores[2].points}]} point(s)
+                        </small>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
@@ -102,5 +184,11 @@
       <script src="{{ url_for('static', filename='js/main.js') }}"></script>
       <script src="{{ url_for('static', filename='js/services/ApiService.js') }}"></script>
       <script src="{{ url_for('static', filename='js/controllers/DashboardController.js') }}"></script>
+      <script>
+        $(document).ready(function(){
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal-trigger').leanModal();
+        });
+      </script>
   </body>
 </html>

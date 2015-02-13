@@ -80,6 +80,28 @@
                     error(function(data){
                         toastr.error(data.status + ": You failed me. . . API");
                     });
+            },
+            getScores: function(vm){
+                $http.get(baseUrl + "/api/v1.0/top").
+                    success(function(data) {
+                        var users = data.user;
+
+                        users.sort(function(a, b){
+                            a = parseInt(a.points);
+                            b = parseInt(b.points);
+                            return b - a;
+                        });
+
+                        vm.userScores = [];
+
+                        vm.userScores.push(users[0]);
+                        vm.userScores.push(users[1]);
+                        vm.userScores.push(users[2]);
+                    }).
+                    error(function(data){
+                        vm.scores = [];
+                        toastr.error(data.status + ": You failed me. . . API");
+                    });
             }
         }
     }

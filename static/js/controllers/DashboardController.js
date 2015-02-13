@@ -10,11 +10,12 @@
   function DashboardController($http, ApiService) {
     /*jshint validthis: true */
     var vm = this;
+
     vm.init = function(){
       vm.users = ApiService.getUserList(vm);
+      vm.getScores();
     };
 
-    setInterval(function(){ ApiService.getNewsFeed(vm); }, 2000);
     vm.vote = function(points,id) {
       if( vm.reason.toString().trim() != "" ) {
         ApiService.applyVote(vm, points, id);
@@ -26,6 +27,17 @@
     vm.getMomentTime = function(timestamp) {
       return (moment(timestamp).fromNow());
     };
+
+    vm.getNewsFeed = function(){
+      ApiService.getNewsFeed(vm);
+    };
+
+    vm.getScores = function()
+    {
+      vm.userScores = ApiService.getScores(vm);
+    }
+
+    setInterval(function(){ vm.getNewsFeed(); }, 2000);
   };
 
 })();

@@ -192,21 +192,8 @@ textarea.materialize-textarea:focus {
   background-color: black;
 } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
 
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes rainbow {
-    0%   {color: pink;}
-    25%  {color: hotpink;}
-    50%  {color: white;}
-    75%  {color: hotpink;}
-    100% {color: pink;}
-}
-
-/* Standard syntax */
-@keyframes rainbow {
-    0%   {color: pink;}
-    25%  {color: hotpink;}
-    50%  {color: white;}
-    75%  {color: hotpink;}
-    100% {color: pink;}
+.top-three-modal {
+  overflow: hidden;
+  max-height: 80%;
+  background-color: #ffabc6;
 }
