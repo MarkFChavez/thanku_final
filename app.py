@@ -189,7 +189,7 @@ def thank_user(user_id):
   point = request.json["point"]
   allowed_to_thank = True
 
-  votes =  Vote.query.filter_by(user_id = user.id, recipient_id = recipient.id, point = point)
+  votes =  Vote.query.filter_by(user_id = user.id, point = point)
 
   for vote in votes:
     if vote.timestamp.date() == datetime.today().date():
