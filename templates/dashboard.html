@@ -48,7 +48,7 @@
         <div class="friend-list row">
           <div class="s12 m12 l12 friend-container " ng-repeat="user in vm.users">
             <img class="friend-img" ng-src="{[{user.image}]}">
-            <div class="tooltip card white friend-details">
+            <div class="tooltip card white friend-details z-depth-5">
               <div class="card-content black-text">
                 <span class="card-title">{[{user.first_name}]}</span>
                 <div class="right">
@@ -75,12 +75,12 @@
           </div>
         </div>
         <div class="col l8 m8 offset-l2 offset-m2">
-          <div class="card-panel newsfeed-card" ng-repeat="nf in vm.newsfeed | orderBy:'-timestamp'">
+          <div class="card-panel newsfeed-card" ng-repeat="nf in vm.newsfeed | orderBy:'timestamp'">
             <div class="row valign-wrapper">
-              <div class="col s2 m1 l1">
-                <img class="newsfeed-img" ng-src="{[{nf.user.image}]}" style="height:60px; width:60px;">
+              <div class="col s2 m2 l2">
+                <img class="newsfeed-img" ng-src="{[{nf.user.image}]}" >
               </div>
-              <div class="col s10 m11 l11">
+              <div class="col s10 m10 l10">
                 <span><strong>{[{ nf.user.first_name  }]} {[{ nf.user.last_name  }]}</strong></span>
                 <br>
                 <em>
