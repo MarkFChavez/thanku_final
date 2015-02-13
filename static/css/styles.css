@@ -7,6 +7,9 @@
 .top20 {
   margin-top: 20px; }
 
+.top25 {
+  margin-top: 25px; }
+
 .padding20 {
   padding: 20px; }
 
@@ -64,8 +67,8 @@
 
 .friend-list {
   position: fixed;
-  top: 150px;
-  background-color: #FF60C9;
+  margin-top: 10px;
+  background-color: #ff80ab;
   padding: 10px 10px; 
   max-height: 410px;
   z-index: 999;

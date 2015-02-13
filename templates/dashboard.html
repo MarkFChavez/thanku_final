@@ -71,13 +71,20 @@
                 <img class="newsfeed-img" ng-src="{[{nf.user.image}]}" >
               </div>
               <div class="col s10 m10 l10">
-                <span><strong>{[{ nf.user.first_name  }]} {[{ nf.user.last_name  }]}</strong></span>
+                <span>
+                  <strong>{[{ nf.user.first_name  }]} {[{ nf.user.last_name  }]}</strong>
+                </span>
                 <br>
                 <em>
                   <small class="">{[{ vm.getMomentTime(nf.timestamp)  }]}</small>
                 </em>
                 <br>
-                <span>{[{ nf.message  }]} </span>
+                <div ng-if="nf.point==1">
+                  <span>{[{ nf.message  }]} </span>
+                </div>
+                <div ng-if="nf.point==2">
+                  <h4>{[{ nf.message }]} </h4>
+                </div>
                 <div ng-if="nf.point==1" class="right vote"> 
                   <i class="mdi-action-stars"></i>
                 </div>
