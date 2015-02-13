@@ -16,7 +16,11 @@
 
     setInterval(function(){ ApiService.getNewsFeed(vm); }, 2000);
     vm.vote = function(points,id) {
-      ApiService.applyVote(vm, points, id);
+      if( vm.reason.toString().trim() != "" ) {
+        ApiService.applyVote(vm, points, id);
+      } else {
+        alert("You must specify a reason why you are thanking this human being!");
+      }
     };
 
     vm.getMomentTime = function(timestamp) {
